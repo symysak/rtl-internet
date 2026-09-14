@@ -50,18 +50,9 @@ jobs:
           suffix="${GOOS}-${GOARCH}${GOARM:+v$GOARM}"
           ext=""
           [ "$GOOS" = "windows" ] && ext=".exe"
-          dir="rtl-internet-${version}-${suffix}"
-          mkdir -p "dist/${dir}"
-          go build -trimpath -ldflags="-s -w" -o "dist/${dir}/rtl-internet${ext}" ./cmd/rtl-internet
-          go build -trimpath -ldflags="-s -w" -o "dist/${dir}/mock-rtl-tcp${ext}" ./cmd/mock-rtl-tcp
-          cp README.md "dist/${dir}/"
-          cd dist
-          if [ "$GOOS" = "windows" ]; then
-            zip -r "${dir}.zip" "${dir}"
-          else
-            tar czf "${dir}.tar.gz" "${dir}"
-          fi
-          rm -rf "${dir}"
+          mkdir -p dist
+          go build -trimpath -ldflags="-s -w" -o "dist/rtl-internet-${version}-${suffix}${ext}" ./cmd/rtl-internet
+          go build -trimpath -ldflags="-s -w" -o "dist/mock-rtl-tcp-${version}-${suffix}${ext}" ./cmd/mock-rtl-tcp
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.goarm && format('v{0}', matrix.goarm) || '' }}
