@@ -52,7 +52,6 @@ jobs:
           [ "$GOOS" = "windows" ] && ext=".exe"
           mkdir -p dist
           go build -trimpath -ldflags="-s -w" -o "dist/rtl-internet-${version}-${suffix}${ext}" ./cmd/rtl-internet
-          go build -trimpath -ldflags="-s -w" -o "dist/mock-rtl-tcp-${version}-${suffix}${ext}" ./cmd/mock-rtl-tcp
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.goarm && format('v{0}', matrix.goarm) || '' }}
